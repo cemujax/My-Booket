@@ -20,7 +20,7 @@
                 </v-layout>
               </v-container>
             </v-card>
-
+            <v-divider></v-divider>
             <!-- card2 -->
             <v-card>
               <h2>신간</h2>
