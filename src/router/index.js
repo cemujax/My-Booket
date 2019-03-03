@@ -11,21 +11,33 @@ import NotFound from '@/views/NotFound'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
+      name: 'home',
       component: Home
     },
-    { path: "/login", component: Login },
+    {
+      path: "/login",
+      name: 'login',
+      component: Login
+    },
     {
       path: '/booket',
+      name: 'booket',
       component: Booket
     },
     {
       path: '/contacts',
+      name: 'contacts',
       component: Contacts
     },
-    { path: "/signup", component: Signup },
+    {
+      path: "/signup",
+      name: 'signup',
+      component: Signup
+    },
     {
       path: '*',
       component: NotFound
