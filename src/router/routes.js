@@ -4,6 +4,12 @@ import Signup from "@/views/Signup";
 import Booket from "@/views/Booket";
 import Contacts from "@/views/Contacts";
 import NotFound from "@/views/NotFound";
+import store from "../store";
+
+const requireAuth = (to, from, next) => {
+  const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`;
+  store.getters.isAuth ? next() : next(loginPath);
+};
 
 const routes = [
   {
@@ -17,19 +23,20 @@ const routes = [
     component: Login
   },
   {
+    path: "/signup",
+    name: "signup",
+    component: Signup
+  },
+  {
     path: "/booket",
     name: "booket",
-    component: Booket
+    component: Booket,
+    beforeEnter: requireAuth
   },
   {
     path: "/contacts",
     name: "contacts",
     component: Contacts
-  },
-  {
-    path: "/signup",
-    name: "signup",
-    component: Signup
   },
   {
     path: "*",
