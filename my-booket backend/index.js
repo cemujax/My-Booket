@@ -1,4 +1,5 @@
 const express = require("express");
+const history = require("connect-history-api-fallback");
 const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
@@ -7,13 +8,13 @@ const app = express();
 const PORT = 4000;
 
 app.use(logger("dev"));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const startT = Date.now();
 app.use("/health", (_, res) => res.json({ time: Date.now() - startT }));
 
+app.use(history());
 app.use(express.static(path.join(__dirname, "../my-booket frontend", "dist")));
 
 app.use((req, res, next) => {
