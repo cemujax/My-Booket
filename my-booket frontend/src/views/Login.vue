@@ -56,7 +56,8 @@ export default {
     return {
       email: "",
       password: "",
-      error: ""
+      error: "",
+      rPath: ""
     };
   },
   computed: {
@@ -64,18 +65,19 @@ export default {
       return !this.email || !this.password;
     }
   },
+  created() {
+    this.rPath = this.$route.query.rPath || "/";
+  },
   methods: {
     ...mapActions(["LOGIN"]),
 
     onSubmit() {
-      console.log("onSubmit");
-
       this.LOGIN({ email: this.email, password: this.password })
         .then(data => {
-          this.$router.push("/");
+          this.$router.push(this.rPath);
         })
         .catch(err => {
-          this.error = err;
+          this.error = err.data.error;
         });
     }
   }
