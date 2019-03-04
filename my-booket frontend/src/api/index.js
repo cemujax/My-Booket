@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const REST_API = "http://localhost:4000";
-// const REST_API = "https://reqres.in/api";
-
+const BASE_URL = "http://localhost:4000/api";
 const request = (method, url, data) => {
   return axios({
     method,
-    url: REST_API + url,
+    url: BASE_URL + url,
     data
   }).then(result => {
     return result;
