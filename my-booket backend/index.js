@@ -5,11 +5,13 @@ const history = require("connect-history-api-fallback");
 const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,7 +27,8 @@ mongoose
   .catch(e => console.error(e));
 
 const startT = Date.now();
-app.use("/health", (_, res) => res.json({ time: Date.now() - startT }));
+app.get("/health", (_, res) => res.json({ time: Date.now() - startT }));
+app.use("/api", require("./routes"));
 
 app.use(history());
 app.use(express.static(path.join(__dirname, "../my-booket frontend", "dist")));
