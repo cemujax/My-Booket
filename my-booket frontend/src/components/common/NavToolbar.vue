@@ -51,7 +51,7 @@
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
-      <v-btn flat v-if="isAuth">로그아웃</v-btn>
+      <v-btn flat v-if="isAuth" @click.prevent="logout">로그아웃</v-btn>
       <v-btn flat v-else :to="{name: 'login'}">로그인</v-btn>
 
       <v-btn flat :to="{name: 'signup'}">회원가입</v-btn>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -70,6 +70,15 @@ export default {
   },
   computed: {
     ...mapGetters(["isAuth"])
+  },
+  methods: {
+    ...mapMutations(["LOGOUT"]),
+
+    logout() {
+      if (!window.confirm("로그아웃 하시겠습니까?")) return;
+      this.LOGOUT();
+      this.$router.push("/");
+    }
   }
 };
 </script>

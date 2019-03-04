@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const REST_API = "https://reqres.in/api";
+const REST_API = "http://localhost:4000";
+// const REST_API = "https://reqres.in/api";
 
 const request = (method, url, data) => {
   return axios({
