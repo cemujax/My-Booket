@@ -1,15 +1,28 @@
+require("dotenv").config();
+
 const express = require("express");
 const history = require("connect-history-api-fallback");
 const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const app = express();
-const PORT = 4000;
+const port = process.env.PORT || 4000;
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+mongoose.Promise = global.Promise;
+
+// CONNECT TO MONGODB SERVER
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .then(() => {
+    console.log("Successfully connected to mongodb");
+  })
+  .catch(e => console.error(e));
 
 const startT = Date.now();
 app.use("/health", (_, res) => res.json({ time: Date.now() - startT }));
@@ -29,5 +42,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(4000, () => {
-  console.log(`server is running localhost:${PORT}`);
+  console.log(`server is running localhost:${port}`);
 });
