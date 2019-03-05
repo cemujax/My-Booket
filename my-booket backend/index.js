@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const proxy = require("http-proxy-middleware");
 const history = require("connect-history-api-fallback");
 const path = require("path");
 const logger = require("morgan");
@@ -28,8 +29,14 @@ mongoose
 
 const startT = Date.now();
 app.get("/health", (_, res) => res.json({ time: Date.now() - startT }));
-app.use("/api", require("./routes"));
-
+app.use("/api", require("./routes/index"));
+app.use(
+  "/interparkAPI",
+  require("./routes/interpark", proxy({
+    target: "http://book.interpark.com/api",
+    changeOrigin: true
+  }))
+);
 app.use(history());
 app.use(express.static(path.join(__dirname, "../my-booket frontend", "dist")));
 
