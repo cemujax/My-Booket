@@ -1,6 +1,7 @@
 import Home from "@/views/Home";
 import Login from "@/views/Login";
 import Signup from "@/views/Signup";
+import BookInfo from "@/views/BookInfo";
 import Booket from "@/views/Booket";
 import Contacts from "@/views/Contacts";
 import NotFound from "@/views/NotFound";
@@ -26,6 +27,11 @@ const routes = [
     path: "/signup",
     name: "signup",
     component: Signup
+  },
+  {
+    path: "/book/:id",
+    name: "book",
+    component: BookInfo
   },
   {
     path: "/booket",

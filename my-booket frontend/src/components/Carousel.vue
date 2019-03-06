@@ -16,11 +16,13 @@
               :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
             >
               <div class="card-carousel--card" v-for="(item, index) in items" :key="index">
-                <img :src="item.coverLargeUrl" :alt="item.title">
-                <div class="card-carousel--card--footer">
-                  <p>{{ item.title }}</p>
-                  <p style="align: center;">{{ item.author }}</p>
-                </div>
+                <router-link :to="`/book/${item.itemId}`">
+                  <img :src="item.coverLargeUrl" :alt="item.title">
+                  <div class="card-carousel--card--footer">
+                    <p>{{ item.title }}</p>
+                    <p style="align: center;">{{ item.author }}</p>
+                  </div>
+                </router-link>
               </div>
             </div>
           </div>
