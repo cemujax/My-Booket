@@ -35,7 +35,6 @@ export const auth = {
 
 export const interpark = {
   newBooks() {
-    console.log(`api newBooks ==>`);
     return axios
       .get("http://localhost:4000/interparkAPI/newBook.api")
       .then(res => res.data)

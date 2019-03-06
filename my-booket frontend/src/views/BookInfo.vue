@@ -5,12 +5,42 @@
       <v-container>
         <v-layout>
           <v-flex>
-            <h2>BookInfo</h2>
+            <div v-if="item">
+              <div class="book-info1">
+                <img :src="item.coverLargeUrl" :alt="item.title">
+                <div class="book-desc">
+                  {{item.description}}
+                  <div>
+                    <a :href="item.link">
+                      <v-btn color="info">인터파크 링크</v-btn>
+                    </a>
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on }">
+                        <v-btn flat icon color="pink" v-on="on">
+                          <v-icon>favorite</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Booket 담기</span>
+                    </v-tooltip>
+                  </div>
+                </div>
+              </div>
+              <div class="book-info2">
+                <span class="book-title">{{item.title}}</span>
+                <ul>
+                  <li>저자:{{item.author}}</li>
+                  <li>출판사: {{item.publisher}}</li>
+                  <li>출판일: {{item.pubDate}}</li>
+                </ul>
+              </div>
+            </div>
+            <div v-else>
+              <h2>Book Not Exists</h2>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
     </v-content>
-
     <Footer/>
   </v-app>
 </template>
@@ -23,10 +53,41 @@ export default {
   name: "BookInfo",
   components: { NavToolbar, Footer },
   data() {
-    return {};
+    return {
+      item: null
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      const newBooks = this.$store.state.newBooks;
+      const item = newBooks.filter(
+        item => item.itemId == this.$route.params.id
+      );
+      this.item = { ...item[0] };
+    }
   }
 };
 </script>
 
 <style>
+.book-info1 {
+  display: flex;
+}
+.book-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+.book-info2 {
+  margin-top: 3%;
+}
+.book-desc {
+  padding: 2%;
+}
+li {
+  list-style: none;
+  font-size: 16px;
+}
 </style>

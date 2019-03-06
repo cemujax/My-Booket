@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scope>
+<style lang="scss">
 $vue-navy: #2c3e50;
 $vue-navy-light: #3a5169;
 $vue-teal: #2c3e50;
