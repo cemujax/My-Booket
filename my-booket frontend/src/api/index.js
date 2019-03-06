@@ -13,7 +13,7 @@ const request = (method, url, data) => {
     url: BASE_URL + url,
     data
   })
-    .then(result => result)
+    .then(result => result.data)
     .catch(result => {
       const { status } = result.response;
       if (status === UNAUTHORIZED) onUnauthorized();
@@ -30,5 +30,15 @@ export const setAuthInHeader = token => {
 export const auth = {
   login(email, password) {
     return request("post", "/login", { email, password });
+  }
+};
+
+export const interpark = {
+  newBooks() {
+    console.log(`api newBooks ==>`);
+    return axios
+      .get("http://localhost:4000/interparkAPI/newBook.api")
+      .then(res => res.data)
+      .catch(error => console.log(error));
   }
 };
