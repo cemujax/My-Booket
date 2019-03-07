@@ -21,6 +21,9 @@ const mutations = {
   },
   SET_NEW_BOOKS(state, newBooks) {
     state.newBooks = newBooks;
+  },
+  SET_BEST_SELLERS(state, bestSellers) {
+    state.bestSellers = bestSellers;
   }
 };
 

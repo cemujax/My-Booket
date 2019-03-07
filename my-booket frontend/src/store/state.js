@@ -1,7 +1,8 @@
 const state = {
   token: null,
   user: {},
-  newBooks: []
+  newBooks: [],
+  bestSellers: []
 };
 
 export default state;

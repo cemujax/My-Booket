@@ -39,5 +39,11 @@ export const interpark = {
       .get("http://localhost:4000/interparkAPI/newBook.api")
       .then(res => res.data)
       .catch(error => console.log(error));
+  },
+  bestSeller() {
+    return axios
+      .get("http://localhost:4000/interparkAPI/bestSeller.api")
+      .then(res => res.data)
+      .catch(error => console.log(error));
   }
 };
