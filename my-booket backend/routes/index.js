@@ -37,4 +37,10 @@ router.post("/bookets", authService.ensureAuth(), async (req, res, next) => {
   res.status(201).json({ booket });
 });
 
+// FETCHT bookets
+router.get("/bookets", authService.ensureAuth(), async (req, res, next) => {
+  const userId = req.user.id;
+  const list = await Bookets.find({ userId });
+  res.json({ list });
+});
 module.exports = router;
