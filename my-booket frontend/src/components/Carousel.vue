@@ -1,7 +1,9 @@
 <template>
   <v-layout>
     <v-flex>
-      <h1>{{headerTitle}}</h1>
+      <div class="card-carousel-title">
+        <h1>{{headerTitle}}</h1>
+      </div>
       <div class="card-carousel-wrapper">
         <div
           class="card-carousel--nav__left"
@@ -16,7 +18,7 @@
               :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
             >
               <div class="card-carousel--card" v-for="(item, index) in items" :key="index">
-                <router-link :to="`/book/${item.itemId}`">
+                <router-link :to="`/book/${item.isbn}`">
                   <img :src="item.coverLargeUrl" :alt="item.title">
                   <div class="card-carousel--card--footer">
                     <p>{{ item.title }}</p>
@@ -79,6 +81,9 @@ $vue-teal-light: #42b983;
 $gray: #666a73;
 $break-medium: 760px;
 
+.card-carousel-title {
+  margin-top: 3%;
+}
 .card-carousel-wrapper {
   display: flex;
   align-items: center;

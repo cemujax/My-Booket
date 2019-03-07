@@ -62,10 +62,11 @@ export default {
   },
   methods: {
     fetchData() {
-      const newBooks = this.$store.state.newBooks;
-      const item = newBooks.filter(
-        item => item.itemId == this.$route.params.id
-      );
+      const books = [
+        ...this.$store.state.newBooks,
+        ...this.$store.state.bestSellers
+      ];
+      const item = books.filter(item => item.isbn == this.$route.params.id);
       this.item = { ...item[0] };
     }
   }

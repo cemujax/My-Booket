@@ -6,9 +6,9 @@
         <v-layout>
           <v-flex xs12 sm6 offset-sm3>
             <h2 v-if="loading">Loading..</h2>
-            <Carousel header-title="신간도서" :items="newBooks"/>
-            <v-divider></v-divider>
             <Carousel header-title="베스트셀러" :items="bestSellers"/>
+            <v-divider></v-divider>
+            <Carousel header-title="신간도서" :items="newBooks"/>
           </v-flex>
         </v-layout>
       </v-container>
