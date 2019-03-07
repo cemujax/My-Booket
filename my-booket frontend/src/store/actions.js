@@ -9,8 +9,8 @@ const actions = {
   ADD_BOOKET(_, { bookInfo }) {
     return api.bookets.create({ bookInfo });
   },
-  FETCH_BOOKETS({ commit }) {
-    return api.bookets.fetch().then(data => {
+  FETCH_BOOKETS({ commit }, { status }) {
+    return api.bookets.fetch(status).then(data => {
       commit("SET_BOOKETS", data.list);
     });
   },
