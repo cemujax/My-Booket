@@ -35,6 +35,9 @@ export const auth = {
 export const bookets = {
   create(bookInfo) {
     return request("post", "/bookets", bookInfo);
+  },
+  fetch() {
+    return request("get", "/bookets");
   }
 };
 export const interpark = {

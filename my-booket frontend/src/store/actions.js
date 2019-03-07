@@ -7,7 +7,12 @@ const actions = {
       .then(res => commit("LOGIN", res.data));
   },
   ADD_BOOKET({ dispatch, state }, { bookInfo }) {
-    return api.bookets.create({ userId: state.user.email, bookInfo });
+    return api.bookets.create({ bookInfo });
+  },
+  FETCH_BOOKETS({ state, commit }) {
+    return api.bookets.fetch().then(data => {
+      commit("SET_BOOKETS", data.list);
+    });
   },
   FETCH_NEWBOOKS({ commit }) {
     return api.interpark.newBooks().then(data => {

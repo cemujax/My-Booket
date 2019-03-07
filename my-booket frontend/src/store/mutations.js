@@ -19,6 +19,9 @@ const mutations = {
     setAuthInHeader(token);
     state.user = {};
   },
+  SET_BOOKETS(state, bookets) {
+    state.bookets = bookets;
+  },
   SET_NEW_BOOKS(state, newBooks) {
     state.newBooks = newBooks;
   },
