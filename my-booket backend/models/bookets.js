@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const booketsSchema = new mongoose.Schema({
-  isbn: { type: String, required: true, unique: true },
+  isbn: { type: String, required: true },
   userId: { type: String, required: true },
   status: { type: Number, default: 0 },
   rate: { type: Number },

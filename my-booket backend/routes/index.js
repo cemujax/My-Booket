@@ -21,14 +21,15 @@ router.post("/login", async (req, res, next) => {
 
 // CREATE bookets
 router.post("/bookets", authService.ensureAuth(), async (req, res, next) => {
-  const { userId, bookInfo } = req.body;
-  if (!userId) res.status(400).end("no userId");
+  const { bookInfo } = req.body;
+  const userId = req.user.id;
   if (!bookInfo.isbn) res.status(400).end("no isbn");
   if (!bookInfo.title) res.status(400).end("no title");
 
   const booket = {
     userId,
-    ...bookInfo
+    ...bookInfo,
+    imageLink: bookInfo.coverLargeUrl
   };
   const booket_instance = new Bookets(booket);
   await booket_instance.save();
