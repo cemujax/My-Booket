@@ -17,7 +17,14 @@
                   hide-details
                 ></v-text-field>
               </v-card-title>
-              <v-data-table :headers="headers" :items="bookets" :search="search">
+              <v-data-table
+                :headers="headers"
+                :items="bookets"
+                :search="search"
+                hide-actions
+                :pagination.sync="pagination"
+                class="elevation-1"
+              >
                 <template v-slot:items="props">
                   <td class="text-xs-right">
                     <img :src="props.item.imageLink" alt="book" height="60px">
@@ -26,11 +33,17 @@
                   <td class="text-xs-left">{{ props.item.author }}</td>
                   <td class="text-xs-left">{{ props.item.publisher }}</td>
                   <td class="text-xs-left">{{ props.item.pubDate }}</td>
-                  <td class="text-xs-left">{{ props.item.status }}</td>
+                  <td class="text-xs-left">
+                    <span v-if="props.item.status==0">Wish</span>
+                    <span v-else-if="props.item.status==1">Reading</span>
+                    <span v-else-if="props.item.status==2">Read</span>
+                  </td>
                   <td class="text-xs-left">{{ props.item.startDate }}</td>
                   <td class="text-xs-left">{{ props.item.endDate }}</td>
                   <td class="text-xs-left">
-                    <router-link :to="{ name: 'booketDetail', params: { id: props.item.isbn } }">
+                    <router-link
+                      :to="{ name: 'booketDetail', params: { id: props.item.isbn , booket: props.item} }"
+                    >
                       <v-btn color="primary" dark class="mb-2">Detail</v-btn>
                     </router-link>
                   </td>
@@ -42,8 +55,10 @@
                   icon="warning"
                 >Your search for "{{ search }}" found no results.</v-alert>
               </v-data-table>
+              <div class="text-xs-center pt-2">
+                <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+              </div>
             </v-card>
-
             <router-view></router-view>
           </v-flex>
         </v-layout>
@@ -65,6 +80,11 @@ export default {
   data() {
     return {
       search: "",
+      pagination: {
+        page: 1,
+        rowsPerPage: 5
+      },
+      selected: [],
       headers: [
         { text: "", align: "right", sortable: false, value: "Booket" },
         { text: "제목", align: "left", sortable: true, value: "title" },
@@ -84,7 +104,19 @@ export default {
   computed: {
     ...mapState({
       bookets: "bookets"
-    })
+    }),
+    pages() {
+      this.pagination.totalItems = this.bookets.length;
+      if (
+        this.pagination.rowsPerPage == null ||
+        this.pagination.totalItems == null
+      )
+        return 0;
+
+      return Math.ceil(
+        this.pagination.totalItems / this.pagination.rowsPerPage
+      );
+    }
   },
   created() {
     this.FETCH_BOOKETS({ status: -1 });
