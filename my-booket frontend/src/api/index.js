@@ -32,7 +32,11 @@ export const auth = {
     return request("post", "/login", { email, password });
   }
 };
-
+export const bookets = {
+  create(bookInfo) {
+    return request("post", "/bookets", bookInfo);
+  }
+};
 export const interpark = {
   newBooks() {
     return axios

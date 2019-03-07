@@ -1,6 +1,7 @@
 const state = {
   token: null,
   user: {},
+  bookets: [],
   newBooks: [],
   bestSellers: []
 };
