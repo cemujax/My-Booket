@@ -62,10 +62,14 @@ export default {
     this.fetchData();
   },
   methods: {
-    ...mapActions(["ADD_BOOKET"]),
+    ...mapActions(["ADD_BOOKET", "FETCH_BOOKETS"]),
 
     addBooket() {
-      this.ADD_BOOKET({ bookInfo: this.item });
+      this.ADD_BOOKET({ bookInfo: this.item }).then(_ =>
+        this.$router.push(`/booket`)
+      );
+
+      console.log(`addBooket End`);
     },
     fetchData() {
       const books = [

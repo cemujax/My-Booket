@@ -6,10 +6,10 @@ const actions = {
       .login(email, password)
       .then(res => commit("LOGIN", res.data));
   },
-  ADD_BOOKET({ dispatch, state }, { bookInfo }) {
+  ADD_BOOKET(_, { bookInfo }) {
     return api.bookets.create({ bookInfo });
   },
-  FETCH_BOOKETS({ state, commit }) {
+  FETCH_BOOKETS({ commit }) {
     return api.bookets.fetch().then(data => {
       commit("SET_BOOKETS", data.list);
     });
