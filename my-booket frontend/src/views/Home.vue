@@ -8,6 +8,7 @@
             <h2 v-if="loading">Loading..</h2>
             <Carousel header-title="신간도서" :items="newBooks"/>
             <v-divider></v-divider>
+            <Carousel header-title="베스트셀러" :items="bestSellers"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -27,25 +28,30 @@ export default {
   components: { NavToolbar, Footer, Carousel },
   data() {
     return {
-      msg: "Home Page",
       loading: false
     };
   },
   computed: {
     ...mapState({
-      newBooks: "newBooks"
+      newBooks: "newBooks",
+      bestSellers: "bestSellers"
     })
   },
   created() {
-    if (!this.$store.state.newBooks.length) this.fetchData();
+    if (
+      !this.$store.state.newBooks.length ||
+      !this.$store.state.bestSellers.length
+    )
+      this.fetchData();
   },
 
   methods: {
-    ...mapActions(["FETCH_NEWBOOKS"]),
+    ...mapActions(["FETCH_NEWBOOKS", "FETCH_BESTSELLERS"]),
 
     fetchData() {
       this.loading = true;
-      this.FETCH_NEWBOOKS().finally(_ => {
+      this.FETCH_NEWBOOKS();
+      this.FETCH_BESTSELLERS().finally(_ => {
         this.loading = false;
       });
     }
