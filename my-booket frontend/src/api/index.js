@@ -36,8 +36,8 @@ export const bookets = {
   create(bookInfo) {
     return request("post", "/bookets", bookInfo);
   },
-  fetch(status) {
-    return request("get", `/bookets?status=${status}`);
+  fetch(id) {
+    return id ? request("get", `/bookets/${id}`) : request("get", `/bookets`);
   },
   destroy(id) {
     return request("delete", `/bookets/${id}`);

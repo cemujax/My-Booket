@@ -25,6 +25,9 @@ const mutations = {
   SET_BOOKETS(state, bookets) {
     state.bookets = bookets;
   },
+  SET_BOOKET(state, booket) {
+    state.booket = booket;
+  },
   SET_NEW_BOOKS(state, newBooks) {
     state.newBooks = newBooks;
   },
