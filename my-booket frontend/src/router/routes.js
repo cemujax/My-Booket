@@ -3,6 +3,7 @@ import Login from "@/views/Login";
 import Signup from "@/views/Signup";
 import BookInfo from "@/views/BookInfo";
 import Booket from "@/views/Booket";
+import BooketDetail from "@/components/BooketDetail";
 import Contacts from "@/views/Contacts";
 import NotFound from "@/views/NotFound";
 import store from "../store";
@@ -37,6 +38,8 @@ const routes = [
     path: "/booket",
     name: "booket",
     component: Booket,
+    children: [{ name: "booketDetail", path: ":id", component: BooketDetail }],
+
     beforeEnter: requireAuth
   },
   {
