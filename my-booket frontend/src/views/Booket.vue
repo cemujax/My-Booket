@@ -1,75 +1,82 @@
 <template>
   <v-app>
     <NavToolbar/>
+
     <v-content>
       <v-container fluid fill-height>
         <v-layout>
           <v-flex>
-            <v-card>
-              <v-card-title>
-                <h2>Booket</h2>
-                <v-spacer></v-spacer>
-                <v-text-field
-                  v-model="search"
-                  append-icon="search"
-                  label="Search"
-                  single-line
-                  hide-details
-                ></v-text-field>
-              </v-card-title>
-              <v-data-table
-                :headers="headers"
-                :items="bookets"
-                :search="search"
-                hide-actions
-                :pagination.sync="pagination"
-                class="elevation-1"
-              >
-                <template v-slot:items="props">
-                  <td class="text-xs-right">
-                    <img :src="props.item.imageLink" alt="book" height="60px">
-                  </td>
-                  <td class="text-xs-left">{{ props.item.title }}</td>
-                  <td class="text-xs-left">{{ props.item.author }}</td>
-                  <td class="text-xs-left">{{ props.item.publisher }}</td>
-                  <td class="text-xs-left">{{ props.item.pubDate }}</td>
-                  <td class="text-xs-left">
-                    <span v-if="props.item.status==0">Wish</span>
-                    <span v-else-if="props.item.status==1">Reading</span>
-                    <span v-else-if="props.item.status==2">Read</span>
-                  </td>
-                  <td class="text-xs-left">{{ props.item.startDate }}</td>
-                  <td class="text-xs-left">{{ props.item.endDate }}</td>
-                  <td class="text-xs-left">
-                    <router-link
-                      :to="{ name: 'booketDetail', params: { id: props.item.isbn , booket: props.item} }"
-                    >
-                      <v-btn color="primary" dark class="mb-2">Detail</v-btn>
-                    </router-link>
-                    <v-btn
-                      color="error"
-                      dark
-                      class="mb-2"
-                      @click.prevent="onDeleteBooket(props.item._id)"
-                    >삭제</v-btn>
-                  </td>
+            <v-expansion-panel v-model="panel" expand>
+              <v-expansion-panel-content>
+                <template v-slot:header>
+                  <h2>Booket</h2>
                 </template>
-                <v-alert
-                  v-slot:no-results
-                  :value="true"
-                  color="error"
-                  icon="warning"
-                >Your search for "{{ search }}" found no results.</v-alert>
-              </v-data-table>
-              <div class="text-xs-center pt-2">
-                <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-              </div>
-            </v-card>
+                <v-card>
+                  <v-card-title>
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                      v-model="search"
+                      append-icon="search"
+                      label="Search"
+                      single-line
+                      hide-details
+                    ></v-text-field>
+                  </v-card-title>
+                  <v-data-table
+                    :headers="headers"
+                    :items="bookets"
+                    :search="search"
+                    hide-actions
+                    :pagination.sync="pagination"
+                    class="elevation-1"
+                  >
+                    <template v-slot:items="props">
+                      <td class="text-xs-right">
+                        <img :src="props.item.imageLink" alt="book" height="60px">
+                      </td>
+                      <td class="text-xs-left">{{ props.item.title }}</td>
+                      <td class="text-xs-left">{{ props.item.author }}</td>
+                      <td class="text-xs-left">{{ props.item.publisher }}</td>
+                      <td class="text-xs-left">{{ props.item.pubDate }}</td>
+                      <td class="text-xs-left">
+                        <span v-if="props.item.status==0">Wish</span>
+                        <span v-else-if="props.item.status==1">Reading</span>
+                        <span v-else-if="props.item.status==2">Read</span>
+                      </td>
+                      <td class="text-xs-left">{{ props.item.startDate }}</td>
+                      <td class="text-xs-left">{{ props.item.endDate }}</td>
+                      <td class="text-xs-left">
+                        <router-link :to="{ name: 'booketDetail', params: { id: props.item._id } }">
+                          <v-btn small color="primary" dark class="mb-2" @click="onDetail">Detail</v-btn>
+                        </router-link>
+                        <v-btn
+                          small
+                          color="error"
+                          dark
+                          class="mb-2"
+                          @click.prevent="onDeleteBooket(props.item._id)"
+                        >삭제</v-btn>
+                      </td>
+                    </template>
+                    <v-alert
+                      v-slot:no-results
+                      :value="true"
+                      color="error"
+                      icon="warning"
+                    >Your search for "{{ search }}" found no results.</v-alert>
+                  </v-data-table>
+                  <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                  </div>
+                </v-card>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
             <router-view></router-view>
           </v-flex>
         </v-layout>
       </v-container>
     </v-content>
+
     <Footer/>
   </v-app>
 </template>
@@ -84,6 +91,7 @@ export default {
   components: { NavToolbar, Footer },
   data() {
     return {
+      panel: [true],
       search: "",
       pagination: {
         page: 1,
@@ -113,7 +121,6 @@ export default {
     }),
 
     pages() {
-      this.pagination.totalItems = this.bookets.length;
       if (
         this.pagination.rowsPerPage == null ||
         this.pagination.totalItems == null
@@ -127,17 +134,20 @@ export default {
     }
   },
   watch: {
-    pagination(val) {
+    pagination() {
       this.pagination.totalItems = this.bookets.length;
     }
   },
   created() {
-    this.FETCH_BOOKETS({ status: -1 });
+    this.FETCH_BOOKETS();
   },
   methods: {
     ...mapMutations(["SET_BOOKETS"]),
     ...mapActions(["FETCH_BOOKETS", "DELETE_BOOKET"]),
 
+    onDetail() {
+      this.$data.panel = [];
+    },
     onDeleteBooket(id) {
       if (!window.confirm("정말 삭제하시겠습니까?")) return;
       this.DELETE_BOOKET({ id }).then(_ => this.$router.push("/"));
