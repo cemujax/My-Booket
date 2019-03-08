@@ -41,8 +41,9 @@ export default {
     if (
       !this.$store.state.newBooks.length ||
       !this.$store.state.bestSellers.length
-    )
+    ) {
       this.fetchData();
+    }
   },
 
   methods: {

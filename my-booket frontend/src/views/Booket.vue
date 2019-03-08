@@ -46,6 +46,12 @@
                     >
                       <v-btn color="primary" dark class="mb-2">Detail</v-btn>
                     </router-link>
+                    <v-btn
+                      color="error"
+                      dark
+                      class="mb-2"
+                      @click.prevent="onDeleteBooket(props.item._id)"
+                    >삭제</v-btn>
                   </td>
                 </template>
                 <v-alert
@@ -70,7 +76,6 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import { booket } from "@/api";
 import NavToolbar from "@/components/common/NavToolbar.vue";
 import Footer from "@/components/common/Footer.vue";
 
@@ -82,7 +87,8 @@ export default {
       search: "",
       pagination: {
         page: 1,
-        rowsPerPage: 5
+        rowsPerPage: 5,
+        totalItems: 0
       },
       selected: [],
       headers: [
@@ -105,17 +111,24 @@ export default {
     ...mapState({
       bookets: "bookets"
     }),
+
     pages() {
       this.pagination.totalItems = this.bookets.length;
       if (
         this.pagination.rowsPerPage == null ||
         this.pagination.totalItems == null
-      )
+      ) {
         return 0;
+      }
 
       return Math.ceil(
         this.pagination.totalItems / this.pagination.rowsPerPage
       );
+    }
+  },
+  watch: {
+    pagination(val) {
+      this.pagination.totalItems = this.bookets.length;
     }
   },
   created() {
@@ -123,7 +136,12 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_BOOKETS"]),
-    ...mapActions(["FETCH_BOOKETS"])
+    ...mapActions(["FETCH_BOOKETS", "DELETE_BOOKET"]),
+
+    onDeleteBooket(id) {
+      if (!window.confirm("정말 삭제하시겠습니까?")) return;
+      this.DELETE_BOOKET({ id }).then(_ => this.$router.push("/"));
+    }
   }
 };
 </script>
