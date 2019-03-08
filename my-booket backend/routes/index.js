@@ -16,7 +16,10 @@ router.post("/login", async (req, res, next) => {
     userName,
     confirmFlag
   };
-  res.json({ data: { token, user } });
+
+  const bookets = await Bookets.find({ userId: resUser._id });
+  console.log(`bookets  `, bookets.length);
+  res.json({ data: { token, user, bookets } });
 });
 
 // CREATE bookets
@@ -62,4 +65,26 @@ router.delete(
     res.status(204).end();
   }
 );
+// DELETE bookets
+router.put("/bookets/:id", async (req, res, next) => {
+  const { id } = req.params;
+  let body = req.body;
+  console.log(`\nid:${id}`);
+  console.log(`\nbody==>`, body);
+
+  let booket = await Bookets.findOne({ _id: id });
+  if (!booket) return res.status(404).end();
+  console.log(`\nbooket `, booket);
+
+  Object.keys(body).forEach(key => {
+    let value = body[key];
+    if (typeof value === "string") value = value.trim();
+
+    if (!value) return;
+    booket[key] = value;
+  });
+
+  await booket.save();
+  res.json({ item: booket });
+});
 module.exports = router;

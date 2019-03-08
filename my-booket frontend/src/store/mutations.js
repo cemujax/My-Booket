@@ -3,7 +3,7 @@ import { setAuthInHeader } from "../api";
 const mutations = {
   LOGIN(state, data) {
     if (!data) return;
-    const { token, user } = data;
+    const { token, user, bookets } = data;
 
     if (!token) return;
     state.token = token;
@@ -12,6 +12,8 @@ const mutations = {
 
     if (!user) return;
     state.user = user;
+    if (!bookets) return;
+    state.bookets = bookets;
   },
   LOGOUT(state, token) {
     state.token = null;
