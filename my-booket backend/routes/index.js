@@ -68,4 +68,23 @@ router.delete(
   }
 );
 
+// UPDATE bookets
+router.put("/bookets/:id", authService.ensureAuth(), async (req, res, next) => {
+  const { id } = req.params;
+  let body = req.body;
+
+  const booket = await Bookets.findOne({ _id: id });
+  if (!booket) return res.status(404).end();
+
+  Object.keys(body).forEach(key => {
+    let value = body[key];
+    if (typeof value === "string") value = value.trim();
+
+    if (!value) return;
+    booket[key] = value;
+  });
+
+  await booket.save();
+  res.json({ item: booket });
+});
 module.exports = router;
