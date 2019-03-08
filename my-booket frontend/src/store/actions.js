@@ -23,7 +23,16 @@ const actions = {
   DELETE_BOOKET(_, { id }) {
     return api.bookets.destroy(id);
   },
+  UPDATE_BOOKET(
+    { dispatch, state },
+    { id, status, startDate, endDate, comment, rate }
+  ) {
+    return api.bookets
+      .update(id, { status, startDate, endDate, comment, rate })
+      .then(_ => dispatch("FETCH_BOOKET", { id: state.booket._id }));
+  },
 
+  // 인터파크
   FETCH_NEWBOOKS({ commit }) {
     return api.interpark.newBooks().then(data => {
       commit("SET_NEW_BOOKS", data.item.slice(0, 5));

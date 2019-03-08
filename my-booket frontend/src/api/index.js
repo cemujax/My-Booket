@@ -41,6 +41,9 @@ export const bookets = {
   },
   destroy(id) {
     return request("delete", `/bookets/${id}`);
+  },
+  update(id, payload) {
+    return request("put", `/bookets/${id}`, payload);
   }
 };
 export const interpark = {
