@@ -20,6 +20,7 @@ const mutations = {
     delete localStorage.token;
     setAuthInHeader(token);
     state.user = {};
+    state.bookets = [];
   },
   SET_BOOKETS(state, bookets) {
     state.bookets = bookets;

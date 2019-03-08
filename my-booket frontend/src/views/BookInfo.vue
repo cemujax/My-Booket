@@ -16,7 +16,14 @@
                     </a>
                     <v-tooltip top>
                       <template v-slot:activator="{ on }">
-                        <v-btn flat icon color="pink" v-on="on" @click.prevent="addBooket">
+                        <v-btn
+                          flat
+                          icon
+                          color="pink"
+                          v-on="on"
+                          v-if="!isBooket(item.isbn)"
+                          @click.prevent="addBooket"
+                        >
                           <v-icon>favorite</v-icon>
                         </v-btn>
                       </template>
@@ -46,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import NavToolbar from "@/components/common/NavToolbar.vue";
 import Footer from "@/components/common/Footer.vue";
 
@@ -61,6 +68,9 @@ export default {
   created() {
     this.fetchData();
   },
+  computed: {
+    ...mapGetters(["isBooket"])
+  },
   methods: {
     ...mapActions(["ADD_BOOKET", "FETCH_BOOKETS"]),
 
@@ -74,7 +84,7 @@ export default {
         ...this.$store.state.newBooks,
         ...this.$store.state.bestSellers
       ];
-      const item = books.filter(item => item.isbn == this.$route.params.id);
+      const item = books.filter(item => item.isbn === this.$route.params.id);
       this.item = { ...item[0] };
     }
   }
