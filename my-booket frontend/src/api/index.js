@@ -36,8 +36,11 @@ export const bookets = {
   create(bookInfo) {
     return request("post", "/bookets", bookInfo);
   },
-  fetch() {
-    return request("get", "/bookets");
+  fetch(status) {
+    return request("get", `/bookets?status=${status}`);
+  },
+  destroy(id) {
+    return request("delete", `/bookets/${id}`);
   }
 };
 export const interpark = {
