@@ -40,7 +40,26 @@ router.post("/bookets", authService.ensureAuth(), async (req, res, next) => {
 // FETCHT bookets
 router.get("/bookets", authService.ensureAuth(), async (req, res, next) => {
   const userId = req.user.id;
-  const list = await Bookets.find({ userId });
+  const { status } = req.query;
+
+  let list;
+  if (!status || Number(status) < 0) {
+    list = await Bookets.find({ userId });
+  } else {
+    list = await Bookets.find({ $and: [{ userId }, { status }] });
+  }
+
   res.json({ list });
 });
+
+// DELETE bookets
+router.delete(
+  "/bookets/:id",
+  authService.ensureAuth(),
+  async (req, res, next) => {
+    const { id } = req.params;
+    await Bookets.deleteOne({ _id: id });
+    res.status(204).end();
+  }
+);
 module.exports = router;
