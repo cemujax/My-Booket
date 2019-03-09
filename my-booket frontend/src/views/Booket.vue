@@ -22,6 +22,7 @@
                       hide-details
                     ></v-text-field>
                   </v-card-title>
+
                   <v-data-table
                     :headers="headers"
                     :items="bookets"
@@ -39,9 +40,9 @@
                       <td class="text-xs-left">{{ props.item.publisher }}</td>
                       <td class="text-xs-left">{{ props.item.pubDate }}</td>
                       <td class="text-xs-left">
-                        <span v-if="props.item.status==0">Wish</span>
-                        <span v-else-if="props.item.status==1">Reading</span>
-                        <span v-else-if="props.item.status==2">Read</span>
+                        <div v-for="(item, index) in booketStatusCode" :key="index">
+                          <span v-if="item.code=== props.item.status">{{item.value}}</span>
+                        </div>
                       </td>
                       <td class="text-xs-left">{{ props.item.startDate }}</td>
                       <td class="text-xs-left">{{ props.item.endDate }}</td>
@@ -117,7 +118,8 @@ export default {
   },
   computed: {
     ...mapState({
-      bookets: "bookets"
+      bookets: "bookets",
+      booketStatusCode: "booketStatusCode"
     }),
 
     pages() {
