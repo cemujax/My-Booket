@@ -25,10 +25,10 @@ const actions = {
   },
   UPDATE_BOOKET(
     { dispatch, state },
-    { id, status, startDate, endDate, comment, rate }
+    { id, status, startDate, endDate, comment, rate, timeline }
   ) {
     return api.bookets
-      .update(id, { status, startDate, endDate, comment, rate })
+      .update(id, { status, startDate, endDate, comment, rate, timeline })
       .then(_ => dispatch("FETCH_BOOKET", { id: state.booket._id }))
       .then(_ => dispatch("FETCH_BOOKETS"));
   },
