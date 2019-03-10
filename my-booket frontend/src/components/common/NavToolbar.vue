@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" fixed app>
+    <v-navigation-drawer
+      v-model="drawer"
+      width="200"
+      :clipped="$vuetify.breakpoint.lgAndUp"
+      fixed
+      app
+    >
       <v-list dense>
         <v-list-tile :to="{name: 'home'}">
           <v-list-tile-action>
