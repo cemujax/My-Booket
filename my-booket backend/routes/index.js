@@ -72,7 +72,6 @@ router.delete(
 router.put("/bookets/:id", authService.ensureAuth(), async (req, res, next) => {
   const { id } = req.params;
   let body = req.body;
-
   const booket = await Bookets.findOne({ _id: id });
   if (!booket) return res.status(404).end();
 
@@ -81,7 +80,11 @@ router.put("/bookets/:id", authService.ensureAuth(), async (req, res, next) => {
     if (typeof value === "string") value = value.trim();
 
     if (!value) return;
-    booket[key] = value;
+    if (typeof value === "object") {
+      booket.timeline.unshift(value);
+    } else {
+      booket[key] = value;
+    }
   });
 
   await booket.save();
