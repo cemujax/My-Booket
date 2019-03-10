@@ -20,8 +20,8 @@ const actions = {
       commit("SET_BOOKET", data.item);
     });
   },
-  DELETE_BOOKET(_, { id }) {
-    return api.bookets.destroy(id);
+  DELETE_BOOKET({ dispatch }, { id }) {
+    return api.bookets.destroy(id).then(_ => dispatch("FETCH_BOOKETS"));
   },
   UPDATE_BOOKET(
     { dispatch, state },
@@ -29,7 +29,8 @@ const actions = {
   ) {
     return api.bookets
       .update(id, { status, startDate, endDate, comment, rate })
-      .then(_ => dispatch("FETCH_BOOKET", { id: state.booket._id }));
+      .then(_ => dispatch("FETCH_BOOKET", { id: state.booket._id }))
+      .then(_ => dispatch("FETCH_BOOKETS"));
   },
 
   // 인터파크

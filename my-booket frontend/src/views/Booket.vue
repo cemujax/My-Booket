@@ -38,7 +38,6 @@
                       <td class="text-xs-left">{{ props.item.title }}</td>
                       <td class="text-xs-left">{{ props.item.author }}</td>
                       <td class="text-xs-left">{{ props.item.publisher }}</td>
-                      <td class="text-xs-left">{{ props.item.pubDate }}</td>
                       <td class="text-xs-left">
                         <div v-for="(item, index) in booketStatusCode" :key="index">
                           <span v-if="item.code=== props.item.status">{{item.value}}</span>
@@ -48,15 +47,19 @@
                       <td class="text-xs-left">{{ props.item.endDate }}</td>
                       <td class="text-xs-left">
                         <router-link :to="{ name: 'booketDetail', params: { id: props.item._id } }">
-                          <v-btn small color="primary" dark class="mb-2" @click="onDetail">Detail</v-btn>
+                          <v-btn color="primary" dark small>
+                            <v-icon dark cneter>search</v-icon>상세
+                          </v-btn>
                         </router-link>
+
                         <v-btn
-                          small
-                          color="error"
+                          color="red lighten-1"
                           dark
-                          class="mb-2"
+                          small
                           @click.prevent="onDeleteBooket(props.item._id)"
-                        >삭제</v-btn>
+                        >
+                          <v-icon dark cneter>delete</v-icon>삭제
+                        </v-btn>
                       </td>
                     </template>
                     <v-alert
@@ -108,11 +111,10 @@ export default {
           value: "author"
         },
         { text: "출판사", value: "publisher" },
-        { text: "출판일", value: "pubDate" },
         { text: "상태", value: "status" },
         { text: "시작일", value: "startDate" },
         { text: "종료일", value: "endDate" },
-        { text: "Action", value: "action" }
+        { text: "Action", value: "action", sortable: false }
       ]
     };
   },
@@ -152,7 +154,7 @@ export default {
     },
     onDeleteBooket(id) {
       if (!window.confirm("정말 삭제하시겠습니까?")) return;
-      this.DELETE_BOOKET({ id }).then(_ => this.$router.push("/"));
+      this.DELETE_BOOKET({ id }).then(_ => this.$router.push("/booket"));
     }
   }
 };
