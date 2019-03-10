@@ -12,19 +12,26 @@
       <ul>
         <li>저자:{{item.author}}</li>
         <li>출판사: {{item.publisher}}</li>
-        <li>출판일: {{item.pubDate}}</li>
+        <li>출판일: {{toDate(item.pubDate)}}</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "Book",
   data() {
     return {};
   },
-  props: ["item"]
+  props: ["item"],
+  methods: {
+    toDate(date) {
+      return moment(date).format("YYYY-MM-DD");
+    }
+  }
 };
 </script>
 

@@ -26,7 +26,7 @@
     >
       <v-card color="red lighten-2" dark>
         <v-card-title class="title">
-          <v-flex xs12 v-text="timeline.createdAt"></v-flex>
+          <v-flex xs12 v-text="toDate(timeline.createdAt)"></v-flex>
         </v-card-title>
         <v-card-text class="white text--primary">
           <p>{{timeline.text}}</p>
@@ -37,6 +37,7 @@
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
+import moment from "moment";
 
 export default {
   name: "Timeline",
@@ -62,6 +63,12 @@ export default {
         timeline: { text: this.input }
       });
       this.input = null;
+    },
+    toDate(date) {
+      moment.locale("ko", {
+        weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"]
+      });
+      return !date ? "" : moment(date).format("YYYY-MM-DD(ddd) hh:mm a");
     }
   }
 };

@@ -43,8 +43,8 @@
                           <span v-if="item.code=== props.item.status">{{item.value}}</span>
                         </div>
                       </td>
-                      <td class="text-xs-left">{{ props.item.startDate }}</td>
-                      <td class="text-xs-left">{{ props.item.endDate }}</td>
+                      <td class="text-xs-left">{{ toDate(props.item.startDate) }}</td>
+                      <td class="text-xs-left">{{ toDate(props.item.endDate) }}</td>
                       <td class="text-xs-left">
                         <router-link :to="{ name: 'booketDetail', params: { id: props.item._id } }">
                           <v-btn color="primary" dark small>
@@ -87,6 +87,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import moment from "moment";
 import NavToolbar from "@/components/common/NavToolbar.vue";
 import Footer from "@/components/common/Footer.vue";
 
@@ -155,6 +156,12 @@ export default {
     onDeleteBooket(id) {
       if (!window.confirm("정말 삭제하시겠습니까?")) return;
       this.DELETE_BOOKET({ id }).then(_ => this.$router.push("/booket"));
+    },
+    toDate(date) {
+      moment.locale("ko", {
+        weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"]
+      });
+      return !date ? "" : moment(date).format("YYYY-MM-DD(ddd)");
     }
   }
 };

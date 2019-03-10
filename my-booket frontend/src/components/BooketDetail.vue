@@ -7,11 +7,11 @@
 
           <div class="booket-wrapper">
             <div booket-status v-for="(item, index) in booketStatusCode" :key="index">
-              <span v-if="item.code=== booket.status">Booket 상태 : {{item.value}}</span>
+              <h2 v-if="item.code=== booket.status">[Booket 상태] {{item.value}}</h2>
             </div>
             <div class="booket-date">
-              <span>시작일 : {{booket.startDate}}</span>
-              <span>종료일 : {{booket.endDate}}</span>
+              <span>시작일 : {{ toDate(booket.startDate)}}</span>
+              <span>종료일 : {{toDate(booket.endDate)}}</span>
             </div>
             <div class="booket-read" v-if="booket.status===2">
               <div class="booket-comment">
@@ -34,15 +34,16 @@
                 color="primary"
                 dark
                 class="mb-2"
-                v-if="readAction===2"
-                @click.prevent="changeReadAction('읽기 완료')"
-              >읽기 완료</v-btn>
+                v-if="readAction>=2"
+                @click.prevent="SET_IS_REVIEW_BOOKET('true')"
+              >리뷰</v-btn>
             </div>
           </div>
 
           <div class="booket-timeline" v-if="booket.status>0">
             <Timeline/>
           </div>
+          <ReviewBooket v-if="isReviewBooket"/>
         </v-flex>
       </v-layout>
     </v-container>
@@ -50,7 +51,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
+import moment from "moment";
 import Book from "@/components/Book";
 import Timeline from "@/components/Timeline";
 import ReviewBooket from "@/components/ReviewBooket";
@@ -67,11 +69,9 @@ export default {
   computed: {
     ...mapState({
       booket: "booket",
-      booketStatusCode: "booketStatusCode"
-    }),
-    isRead() {
-      return this.readAction > 2 ? true : false;
-    }
+      booketStatusCode: "booketStatusCode",
+      isReviewBooket: "isReviewBooket"
+    })
   },
   watch: {
     $route: "fetchData"
@@ -79,8 +79,8 @@ export default {
   created() {
     this.fetchData().then(() => {});
   },
-  updated() {},
   methods: {
+    ...mapMutations(["SET_IS_REVIEW_BOOKET"]),
     ...mapActions(["FETCH_BOOKET", "UPDATE_BOOKET"]),
 
     fetchData() {
@@ -96,26 +96,22 @@ export default {
 
       let payload = {
         id: this.booket._id,
-        status: this.booket.status + 1
+        status: this.booket.status + 1,
+        startDate: new Date()
       };
-      if (this.readAction === 1) {
-        // 읽기시작
-        payload.startDate = new Date();
-      } else if (this.readAction === 2) {
-        // 읽기 완료
-
-        const rate = 4,
-          comment = "comment"; // dummy
-        payload.endDate = new Date();
-        payload.rate = rate;
-        payload.comment = comment;
-      }
       this.updateBooket(payload);
       this.readAction++;
     },
 
     updateBooket(payload) {
       this.UPDATE_BOOKET(payload);
+    },
+
+    toDate(date) {
+      moment.locale("ko", {
+        weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"]
+      });
+      return !date ? "" : moment(date).format("YYYY-MM-DD(ddd)");
     }
   }
 };
