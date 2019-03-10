@@ -43,7 +43,11 @@ router.post("/bookets", authService.ensureAuth(), async (req, res, next) => {
 router.get("/bookets", authService.ensureAuth(), async (req, res, next) => {
   const userId = req.user.id;
 
-  const list = await Bookets.find({ userId });
+  const list = await Bookets.find({ userId }).sort({
+    status: 1,
+    startDate: -1,
+    createdAt: -1
+  });
   res.json({ list });
 });
 
