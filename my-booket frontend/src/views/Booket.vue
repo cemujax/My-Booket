@@ -11,6 +11,7 @@
                 <template v-slot:header>
                   <h2>Booket</h2>
                 </template>
+
                 <v-card>
                   <v-card-title>
                     <v-spacer></v-spacer>
@@ -27,8 +28,8 @@
                     :headers="headers"
                     :items="bookets"
                     :search="search"
-                    hide-actions
-                    :pagination.sync="pagination"
+                    disable-initial-sort
+                    no-data-text="booket이 없습니다."
                     class="elevation-1"
                   >
                     <template v-slot:items="props">
@@ -47,7 +48,7 @@
                       <td class="text-xs-left">{{ toDate(props.item.endDate) }}</td>
                       <td class="text-xs-left">
                         <router-link :to="{ name: 'booketDetail', params: { id: props.item._id } }">
-                          <v-btn color="primary" dark small>
+                          <v-btn color="primary" dark small flat>
                             <v-icon dark cneter>search</v-icon>상세
                           </v-btn>
                         </router-link>
@@ -56,6 +57,7 @@
                           color="red lighten-1"
                           dark
                           small
+                          flat
                           @click.prevent="onDeleteBooket(props.item._id)"
                         >
                           <v-icon dark cneter>delete</v-icon>삭제
@@ -69,9 +71,6 @@
                       icon="warning"
                     >Your search for "{{ search }}" found no results.</v-alert>
                   </v-data-table>
-                  <div class="text-xs-center pt-2">
-                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-                  </div>
                 </v-card>
               </v-expansion-panel-content>
             </v-expansion-panel>
@@ -115,7 +114,7 @@ export default {
         { text: "상태", value: "status" },
         { text: "시작일", value: "startDate" },
         { text: "종료일", value: "endDate" },
-        { text: "Action", value: "action", sortable: false }
+        { text: "Action", value: "action", sortable: false, align: "center" }
       ]
     };
   },

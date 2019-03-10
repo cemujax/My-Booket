@@ -5,7 +5,7 @@
         <v-flex>
           <Book :item="booket"/>
 
-          <div class="booket-wrapper">
+          <div class="booket-wrapper mt-3">
             <div booket-status v-for="(item, index) in booketStatusCode" :key="index">
               <h2 v-if="item.code=== booket.status">[Booket 상태] {{item.value}}</h2>
             </div>
@@ -18,25 +18,35 @@
                 <span>한줄평 : {{booket.comment}}</span>
               </div>
               <div class="booket-rate">
-                <span>평점 : {{booket.rate}}</span>
+                <v-rating
+                  :value="booket.rate || 0"
+                  color="yellow darken-2"
+                  background-color="grey darken-1"
+                  hover
+                  readonly
+                ></v-rating>
               </div>
             </div>
 
             <div class="booket-readAction">
               <v-btn
-                color="primary"
+                color="teal lighten-2"
                 dark
                 class="mb-2"
                 v-if="readAction===1"
                 @click.prevent="changeReadAction('읽기 시작')"
-              >읽기 시작</v-btn>
+              >
+                <v-icon dark cneter>touch_app</v-icon>읽기 시작
+              </v-btn>
               <v-btn
-                color="primary"
+                color="pink lighten-2"
                 dark
                 class="mb-2"
                 v-if="readAction>=2"
                 @click.prevent="SET_IS_REVIEW_BOOKET('true')"
-              >리뷰</v-btn>
+              >
+                <v-icon dark cneter>assignment</v-icon>리뷰
+              </v-btn>
             </div>
           </div>
 
@@ -108,16 +118,13 @@ export default {
     },
 
     toDate(date) {
-      return !date ? "" : moment(date).format("YYYY-MM-DD(ddd)");
+      return !date ? "" : moment(date).format("YYYY-MM-DD(ddd) hh:mm a");
     }
   }
 };
 </script>
 
 <style>
-.booket-wrapper {
-  margin-top: 2%;
-}
 .booket-date {
   display: flex;
 }
