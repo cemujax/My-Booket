@@ -46,8 +46,8 @@ export default {};
 }
 
 .modal-container {
-  width: 500px;
-  height: 250px;
+  width: 450px;
+  height: 300px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -59,7 +59,8 @@ export default {};
 
 .modal-header h3 {
   margin-top: 0;
-  color: #42b983;
+  color: #000000;
+  font-size: 15px;
 }
 
 .modal-body {
