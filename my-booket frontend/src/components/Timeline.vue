@@ -65,9 +65,6 @@ export default {
       this.input = null;
     },
     toDate(date) {
-      moment.locale("ko", {
-        weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"]
-      });
       return !date ? "" : moment(date).format("YYYY-MM-DD(ddd) hh:mm a");
     }
   }

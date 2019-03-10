@@ -158,9 +158,6 @@ export default {
       this.DELETE_BOOKET({ id }).then(_ => this.$router.push("/booket"));
     },
     toDate(date) {
-      moment.locale("ko", {
-        weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"]
-      });
       return !date ? "" : moment(date).format("YYYY-MM-DD(ddd)");
     }
   }
