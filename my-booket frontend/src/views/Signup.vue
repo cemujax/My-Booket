@@ -14,7 +14,7 @@
                 <form name="signup-form">
                   <v-text-field
                     v-validate="'required|email|min:5|max:40'"
-                    v-model="email"
+                    v-model="form.email"
                     :counter="40"
                     :error-messages="errors.collect('email')"
                     label="E-mail"
@@ -23,7 +23,7 @@
                   ></v-text-field>
                   <v-text-field
                     v-validate="'required|min:4|max:50'"
-                    v-model="password"
+                    v-model="form.password"
                     :counter="50"
                     :error-messages="errors.collect('password')"
                     label="비밀번호"
@@ -33,7 +33,7 @@
                   ></v-text-field>
                   <v-text-field
                     v-validate="'required|min:1|max:30'"
-                    v-model="name"
+                    v-model="form.name"
                     :counter="30"
                     :error-messages="errors.collect('name')"
                     label="이름"
@@ -50,6 +50,14 @@
             </v-card>
           </v-flex>
         </v-layout>
+        <v-snackbar
+          v-model="snackbar.isSnackbark"
+          :color="snackbar.color"
+          :timeout="snackbar.timeout"
+        >
+          {{ snackbar.msg }}
+          <v-btn dark flat @click="snackbar.isSnackbark = false">Close</v-btn>
+        </v-snackbar>
       </v-container>
     </v-content>
     <Footer/>
@@ -57,6 +65,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import ko from "vee-validate/dist/locale/ko";
 import NavToolbar from "@/components/common/NavToolbar.vue";
 import Footer from "@/components/common/Footer.vue";
@@ -68,9 +77,11 @@ export default {
     validator: "new"
   },
   data: () => ({
-    email: "",
-    password: "",
-    name: "",
+    form: {
+      email: "",
+      password: "",
+      name: ""
+    },
     dictionary: {
       messages: ko.messages,
       attributes: {
@@ -78,6 +89,12 @@ export default {
         password: "암호",
         name: "이름"
       }
+    },
+    snackbar: {
+      isSnackbark: false,
+      msg: "",
+      color: "",
+      timeout: 4000
     }
   }),
 
@@ -86,19 +103,34 @@ export default {
   },
 
   methods: {
+    ...mapActions(["SIGNUP"]),
+
     submit() {
       this.$validator
         .validateAll()
-        .then(r => {
-          console.log(r);
+        .then(res => {
+          if (!res) throw new Error("필수항목을 기입해주세요.");
+          return this.SIGNUP({ form: this.form });
         })
-        .catch(e => console.error(e.message));
+        .then(res => {
+          if (!res.result) throw new Error(res.msg);
+          this.popSnackBar("회원가입 성공했습니다.", "success");
+          setTimeout(() => {
+            this.$router.push("/login");
+          }, 1500);
+        })
+        .catch(e => this.popSnackBar(e.message, "error"));
     },
     clear() {
-      this.name = "";
-      this.email = "";
-      this.password = "";
+      this.form.name = "";
+      this.form.email = "";
+      this.form.password = "";
       this.$validator.reset();
+    },
+    popSnackBar(msg, color) {
+      this.snackbar.isSnackbark = true;
+      this.snackbar.msg = msg;
+      this.snackbar.color = color;
     }
   }
 };
