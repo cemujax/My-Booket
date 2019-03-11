@@ -6,6 +6,9 @@ const actions = {
       .login(email, password)
       .then(res => commit("LOGIN", res.data));
   },
+  SIGNUP({ commit }, { form }) {
+    return api.auth.signup(form);
+  },
 
   ADD_BOOKET(_, { bookInfo }) {
     return api.bookets.create({ bookInfo });

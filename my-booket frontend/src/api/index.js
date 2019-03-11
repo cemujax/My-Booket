@@ -30,6 +30,9 @@ export const setAuthInHeader = token => {
 export const auth = {
   login(email, password) {
     return request("post", "/login", { email, password });
+  },
+  signup(form) {
+    return request("post", "/signup", { form });
   }
 };
 export const bookets = {
