@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify";
+import VeeValidate from "vee-validate";
 import router from "./router";
 import store from "./store";
 
@@ -7,7 +8,9 @@ import App from "./App";
 import moment from "moment";
 
 Vue.use(Vuetify);
+Vue.use(VeeValidate);
 Vue.config.productionTip = false;
+
 moment.locale("ko", {
   weekdaysShort: ["일", "월", "화", "수", "목", "금", "토"]
 });
