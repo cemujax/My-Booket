@@ -21,6 +21,23 @@ router.post("/login", async (req, res, next) => {
   res.json({ data: { token, user, bookets } });
 });
 
+router.post("/signup", (req, res, next) => {
+  const form = req.body.form;
+
+  if (!form.email) return res.send({ result: false, msg: "email 없습니다." });
+  if (!form.name) return res.send({ result: false, msg: "이름이 없습니다." });
+  if (!form.password)
+    return res.send({ result: false, msg: "비밀번호가 없습니다." });
+
+  Users.findOne({ email: form.email })
+    .then(r => {
+      if (r) throw new Error("이미 가입된 이메일입니다.");
+      return Users.create({ ...form, userName: form.name });
+    })
+    .then(r => res.send({ result: true }))
+    .catch(e => res.send({ result: false, msg: e.message }));
+});
+
 // CREATE bookets
 router.post("/bookets", authService.ensureAuth(), async (req, res, next) => {
   const { bookInfo } = req.body;
