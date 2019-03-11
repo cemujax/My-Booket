@@ -106,10 +106,7 @@ export default {
       headers: [
         { text: "", align: "right", sortable: false, value: "Booket" },
         { text: "제목", align: "left", sortable: true, value: "title" },
-        {
-          text: "저자",
-          value: "author"
-        },
+        { text: "저자", value: "author" },
         { text: "출판사", value: "publisher" },
         { text: "상태", value: "status" },
         { text: "시작일", value: "startDate" },

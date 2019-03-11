@@ -3,11 +3,11 @@
     <NavToolbar/>
     <v-content>
       <v-container fluid fill-height>
-        <v-layout>
-          <v-flex xs8 sm4 offset-sm4>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>로그인</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-form>
@@ -22,7 +22,7 @@
                   <v-text-field
                     prepend-icon="lock"
                     name="password"
-                    label="Password"
+                    label="비밀번호"
                     id="password"
                     type="password"
                     v-model="password"
@@ -31,7 +31,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" :disabled="invalidForm" @click.prevent="onSubmit">Login</v-btn>
+                <v-btn color="primary" :disabled="invalidForm" @click.prevent="onSubmit">로그인</v-btn>
               </v-card-actions>
               <p class="error" v-if="error">{{error}}</p>
             </v-card>
