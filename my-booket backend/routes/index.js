@@ -3,6 +3,7 @@ const Users = require("../models/users");
 const Bookets = require("../models/bookets");
 const authService = require("../service/auth");
 const router = express.Router();
+const crypto = require("crypto");
 
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
@@ -33,6 +34,15 @@ router.post("/signup", (req, res, next) => {
     .then(r => {
       if (r) throw new Error("이미 가입된 이메일입니다.");
       return Users.create({ ...form, userName: form.name });
+    })
+    .then(r => {
+      const password = crypto.scryptSync(
+        r.password,
+        r._id.toString(),
+        64,
+        { N: 1024 }.toString("hex")
+      );
+      return Users.updateOne({ _id: r._id }, { $set: { password } });
     })
     .then(r => res.send({ result: true }))
     .catch(e => res.send({ result: false, msg: e.message }));
