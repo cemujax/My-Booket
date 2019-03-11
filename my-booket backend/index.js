@@ -52,5 +52,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(4000, () => {
-  console.log(`server is running localhost:${port}`);
+  console.log(`server is running :${port}`);
 });
