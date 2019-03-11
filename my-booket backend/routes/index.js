@@ -7,10 +7,20 @@ const crypto = require("crypto");
 
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
-  const resUser = await Users.findOne({ email, password });
 
-  if (!resUser) return res.status(401).json({ error: "로그인 실패" });
+  const resUser = await Users.findOne({ email });
+
+  if (!resUser)
+    return res.status(401).json({ error: "존재하지 않는 Email 입니다." });
+
+  const scryptPwd = crypto
+    .scryptSync(password, resUser._id.toString(), 64, { N: 1024 })
+    .toString("hex");
+  if (resUser.password !== scryptPwd)
+    return res.status(401).json({ error: "비밀번호가 틀립니다." });
+
   const token = authService.signToken(resUser.id);
+
   const { userName, confirmFlag } = resUser;
   const user = {
     email,
@@ -36,12 +46,9 @@ router.post("/signup", (req, res, next) => {
       return Users.create({ ...form, userName: form.name });
     })
     .then(r => {
-      const password = crypto.scryptSync(
-        r.password,
-        r._id.toString(),
-        64,
-        { N: 1024 }.toString("hex")
-      );
+      const password = crypto
+        .scryptSync(r.password, r._id.toString(), 64, { N: 1024 })
+        .toString("hex");
       return Users.updateOne({ _id: r._id }, { $set: { password } });
     })
     .then(r => res.send({ result: true }))
