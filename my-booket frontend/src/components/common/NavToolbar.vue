@@ -16,6 +16,14 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile :to="{name: 'searchbook'}">
+          <v-list-tile-action>
+            <v-icon>search</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>SearchBook</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile :to="{name: 'booket'}">
           <v-list-tile-action>
             <v-icon>book</v-icon>
@@ -43,20 +51,7 @@
           <span>My Booket</span>
         </router-link>
       </v-toolbar-title>
-
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
       <v-btn flat v-if="isAuth" @click.prevent="logout">로그아웃</v-btn>
       <v-btn flat v-else :to="{name: 'login'}">로그인</v-btn>
 

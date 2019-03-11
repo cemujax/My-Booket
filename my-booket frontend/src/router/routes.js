@@ -1,6 +1,7 @@
 import Home from "@/views/Home";
 import Login from "@/views/Login";
 import Signup from "@/views/Signup";
+import SearchBook from "@/views/SearchBook";
 import BookInfo from "@/views/BookInfo";
 import Booket from "@/views/Booket";
 import BooketDetail from "@/components/BooketDetail";
@@ -28,6 +29,11 @@ const routes = [
     path: "/signup",
     name: "signup",
     component: Signup
+  },
+  {
+    path: "/searchbook",
+    name: "searchbook",
+    component: SearchBook
   },
   {
     path: "/book/:id",
