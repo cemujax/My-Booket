@@ -18,8 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.Promise = global.Promise;
+mongoose.set("useCreateIndex", true);
 
-// CONNECT TO MONGODB SERVER
 mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => {
