@@ -9,6 +9,7 @@ const state = {
     { code: 1, value: "읽는중" },
     { code: 2, value: "완독" }
   ],
+  book: {},
   newBooks: [],
   bestSellers: []
 };

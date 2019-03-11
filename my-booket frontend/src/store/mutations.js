@@ -22,6 +22,9 @@ const mutations = {
     state.user = {};
     state.bookets = [];
   },
+  SET_BOOK(state, book) {
+    state.book = book;
+  },
   SET_BOOKETS(state, bookets) {
     state.bookets = bookets;
   },

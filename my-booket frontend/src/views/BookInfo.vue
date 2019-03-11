@@ -5,13 +5,13 @@
       <v-container>
         <v-layout>
           <v-flex>
-            <div v-if="item">
+            <div v-if="book">
               <div class="book-info1">
-                <img :src="item.coverLargeUrl" :alt="item.title">
+                <img :src="book.coverLargeUrl" :alt="book.title">
                 <div class="book-desc">
-                  {{item.description}}
+                  {{book.description}}
                   <div>
-                    <a :href="item.link">
+                    <a :href="book.link">
                       <v-btn color="info">인터파크 링크</v-btn>
                     </a>
                     <v-tooltip top>
@@ -21,7 +21,7 @@
                           icon
                           color="pink"
                           v-on="on"
-                          v-if="!isBooket(item.isbn)"
+                          v-if="!isBooket(book.isbn)"
                           @click.prevent="addBooket"
                         >
                           <v-icon>favorite</v-icon>
@@ -33,11 +33,11 @@
                 </div>
               </div>
               <div class="book-info2">
-                <span class="book-title">{{item.title}}</span>
+                <span class="book-title">{{book.title}}</span>
                 <ul>
-                  <li>저자:{{item.author}}</li>
-                  <li>출판사: {{item.publisher}}</li>
-                  <li>출판일: {{item.pubDate}}</li>
+                  <li>저자:{{book.author}}</li>
+                  <li>출판사: {{book.publisher}}</li>
+                  <li>출판일: {{book.pubDate}}</li>
                 </ul>
               </div>
             </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import NavToolbar from "@/components/common/NavToolbar.vue";
 import Footer from "@/components/common/Footer.vue";
 
@@ -61,31 +61,32 @@ export default {
   name: "BookInfo",
   components: { NavToolbar, Footer },
   data() {
-    return {
-      item: null
-    };
+    return {};
   },
   created() {
     this.fetchData();
   },
   computed: {
+    ...mapState({
+      book: "book"
+    }),
     ...mapGetters(["isBooket"])
   },
   methods: {
-    ...mapActions(["ADD_BOOKET", "FETCH_BOOKETS"]),
+    ...mapActions(["ADD_BOOKET"]),
 
     addBooket() {
-      this.ADD_BOOKET({ bookInfo: this.item }).then(_ =>
+      this.ADD_BOOKET({ bookInfo: this.book }).then(_ =>
         this.$router.push(`/booket`)
       );
     },
     fetchData() {
-      const books = [
-        ...this.$store.state.newBooks,
-        ...this.$store.state.bestSellers
-      ];
-      const item = books.filter(item => item.isbn === this.$route.params.id);
-      this.item = { ...item[0] };
+      if (
+        this.$route.query.book &&
+        Object.keys(this.$route.query.book).length !== 0
+      ) {
+        this.$store.state.book = this.$route.query.book;
+      }
     }
   }
 };

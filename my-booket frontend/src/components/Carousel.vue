@@ -18,7 +18,7 @@
               :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
             >
               <div class="card-carousel--card" v-for="(item, index) in items" :key="index">
-                <router-link :to="`/book/${item.isbn}`">
+                <router-link :to="{ path: `/book/${item.isbn}`, query: { book: item } }">
                   <img :src="item.coverLargeUrl" :alt="item.title">
                   <div class="card-carousel--card--footer">
                     <p>{{ item.title }}</p>
