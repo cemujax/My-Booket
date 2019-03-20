@@ -3,8 +3,8 @@
     <NavToolbar/>
     <v-content>
       <v-container fluid fill-height>
-        <v-layout>
-          <v-flex xs12 sm4 offset-sm3>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm4>
             <v-card>
               <v-card-title primary-title>
                 <div>

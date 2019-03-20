@@ -13,6 +13,9 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "Nanum Gothic", sans-serif;
+}
 a {
   text-decoration: none;
 }

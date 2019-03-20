@@ -37,7 +37,7 @@
         </v-layout>
       </v-container>
 
-      <v-container fluid>
+      <v-container style="padding-top:0;">
         <div v-if="Object.keys(searchResult).length !== 0" class="serch-book-result text-xs-center">
           <div v-if="errorMessage">
             <h2>{{errorMessage}}</h2>
