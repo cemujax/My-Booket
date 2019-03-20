@@ -35,6 +35,12 @@ const actions = {
       .then(_ => dispatch("FETCH_BOOKET", { id: state.booket._id }))
       .then(_ => dispatch("FETCH_BOOKETS"));
   },
+  DELETE_TIMELINE({ dispatch, state }, { booketId, timelineId }) {
+    return api.bookets
+      .update(booketId, { timelineId })
+      .then(_ => dispatch("FETCH_BOOKET", { id: state.booket._id }))
+      .then(_ => dispatch("FETCH_BOOKETS"));
+  },
 
   // 인터파크
   FETCH_NEWBOOKS({ commit }) {

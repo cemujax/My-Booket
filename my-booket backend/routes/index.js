@@ -123,9 +123,19 @@ router.put("/bookets/:id", authService.ensureAuth(), async (req, res, next) => {
     } else {
       booket[key] = value;
     }
+
+    if (key === "timelineId") {
+      // timeline 삭제
+      booket.timeline = booket.timeline.filter(t => {
+        if (t._id != value) {
+        }
+        return t._id != value;
+      });
+    }
   });
 
   await booket.save();
   res.json({ item: booket });
 });
+
 module.exports = router;

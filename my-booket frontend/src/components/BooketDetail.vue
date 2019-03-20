@@ -55,8 +55,8 @@
               </div>
             </div>
           </v-card>
-          <div class="booket-timeline" v-if="booket.status>0">
-            <Timeline/>
+          <div class="booket-timeline mt-3" v-if="booket.status>0">
+            <Timeline @onDelete="deleteTimeline"/>
           </div>
           <ReviewBooket v-if="isReviewBooket"/>
         </v-flex>
@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_IS_REVIEW_BOOKET"]),
-    ...mapActions(["FETCH_BOOKET", "UPDATE_BOOKET"]),
+    ...mapActions(["FETCH_BOOKET", "UPDATE_BOOKET", "DELETE_TIMELINE"]),
 
     fetchData() {
       this.loading = true;
@@ -121,7 +121,12 @@ export default {
     updateBooket(payload) {
       this.UPDATE_BOOKET(payload);
     },
-
+    deleteTimeline(timelineId) {
+      this.DELETE_TIMELINE({
+        booketId: this.booket._id,
+        timelineId: timelineId
+      });
+    },
     toDate(date) {
       return !date ? "" : moment(date).format("YYYY-MM-DD(ddd) hh:mm a");
     }
