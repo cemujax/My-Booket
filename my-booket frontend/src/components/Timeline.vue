@@ -1,6 +1,6 @@
 
 <template>
-  <v-timeline clipped style="max-width: 800px; margin-top: 10px">
+  <v-timeline clipped style="max-width: 900px; margin-top: 10px">
     <v-timeline-item color="red lighten-2" icon="calendar_today" fill-dot>
       <v-text-field
         v-model="input"

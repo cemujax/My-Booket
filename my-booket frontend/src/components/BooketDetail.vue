@@ -1,55 +1,60 @@
 <template>
-  <v-content>
-    <v-container>
+  <v-content style="padding: 0;">
+    <v-container style="padding-top: 0;">
       <v-layout>
         <v-flex>
           <Book :item="booket" :isFunc="false"/>
 
-          <div class="booket-wrapper mt-3">
-            <div booket-status v-for="(item, index) in booketStatusCode" :key="index">
-              <h2 v-if="item.code=== booket.status">[Booket 상태] {{item.value}}</h2>
-            </div>
-            <div class="booket-date">
-              <span>시작일 : {{ toDate(booket.startDate)}}</span>
-              <span>종료일 : {{toDate(booket.endDate)}}</span>
-            </div>
-            <div class="booket-read" v-if="booket.status===2">
-              <div class="booket-comment">
-                <span>한줄평 : {{booket.comment}}</span>
+          <v-card>
+            <div class="booket-wrapper mt-3">
+              <div class="booket-header">
+                <div class="booket-status">
+                  <div v-for="(item, index) in booketStatusCode" :key="index">
+                    <h2 v-if="item.code=== booket.status">[Booket 상태] {{item.value}}</h2>
+                  </div>
+                </div>
+                <div class="booket-readAction">
+                  <v-btn
+                    color="teal lighten-2"
+                    dark
+                    class="mb-2"
+                    v-if="readAction===1"
+                    @click.prevent="changeReadAction('읽기 시작')"
+                  >
+                    <v-icon dark cneter>touch_app</v-icon>읽기 시작
+                  </v-btn>
+                  <v-btn
+                    color="pink lighten-2"
+                    dark
+                    class="mb-2"
+                    v-if="readAction>=2"
+                    @click.prevent="SET_IS_REVIEW_BOOKET('true')"
+                  >
+                    <v-icon dark cneter>assignment</v-icon>리뷰
+                  </v-btn>
+                </div>
               </div>
-              <div class="booket-rate">
-                <v-rating
-                  :value="booket.rate || 0"
-                  color="yellow darken-2"
-                  background-color="grey darken-1"
-                  hover
-                  readonly
-                ></v-rating>
+              <div class="booket-date mt-3">
+                <p>시작일 : {{ toDate(booket.startDate)}}</p>
+                <p>종료일 : {{toDate(booket.endDate)}}</p>
+              </div>
+              <div class="booket-review" v-if="booket.status===2">
+                <div class="booket-comment mt-3">
+                  <p>한줄평 : {{booket.comment}}</p>
+                </div>
+                <div class="booket-rate">
+                  <v-rating
+                    :value="booket.rate || 0"
+                    color="yellow darken-2"
+                    background-color="grey darken-1"
+                    hover
+                    readonly
+                  ></v-rating>
+                  <p style="margin-left: 70px;">평점:{{ booket.rate }}</p>
+                </div>
               </div>
             </div>
-
-            <div class="booket-readAction">
-              <v-btn
-                color="teal lighten-2"
-                dark
-                class="mb-2"
-                v-if="readAction===1"
-                @click.prevent="changeReadAction('읽기 시작')"
-              >
-                <v-icon dark cneter>touch_app</v-icon>읽기 시작
-              </v-btn>
-              <v-btn
-                color="pink lighten-2"
-                dark
-                class="mb-2"
-                v-if="readAction>=2"
-                @click.prevent="SET_IS_REVIEW_BOOKET('true')"
-              >
-                <v-icon dark cneter>assignment</v-icon>리뷰
-              </v-btn>
-            </div>
-          </div>
-
+          </v-card>
           <div class="booket-timeline" v-if="booket.status>0">
             <Timeline/>
           </div>
@@ -125,7 +130,18 @@ export default {
 </script>
 
 <style>
-.booket-date {
+.booket-wrapper {
+  padding: 10px;
+}
+.booket-header {
   display: flex;
+}
+.booket-status {
+  padding: 8px 15px 0 0;
+}
+p {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 5px;
 }
 </style>

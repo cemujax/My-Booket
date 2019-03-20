@@ -68,7 +68,6 @@ export default {
       return moment(date).format("YYYY-MM-DD");
     },
     addBooket() {
-      console.log(`addBooket `, this.item);
       this.ADD_BOOKET({ bookInfo: this.item }).then(_ =>
         this.$router.push(`/booket`)
       );
