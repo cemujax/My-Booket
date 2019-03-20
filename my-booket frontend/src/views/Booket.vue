@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <NavToolbar/>
-
     <v-content>
       <v-container fluid fill-height>
         <v-layout>
@@ -48,7 +47,7 @@
                       <td class="text-xs-left">{{ toDate(props.item.endDate) }}</td>
                       <td class="text-xs-left">
                         <router-link :to="{ name: 'booketDetail', params: { id: props.item._id } }">
-                          <v-btn color="primary" dark small flat>
+                          <v-btn color="primary" dark small flat @click="onDetail">
                             <v-icon dark cneter>search</v-icon>상세
                           </v-btn>
                         </router-link>
@@ -79,7 +78,6 @@
         </v-layout>
       </v-container>
     </v-content>
-
     <Footer/>
   </v-app>
 </template>
@@ -147,7 +145,7 @@ export default {
     ...mapActions(["FETCH_BOOKETS", "DELETE_BOOKET"]),
 
     onDetail() {
-      this.$data.panel = [];
+      this.$data.panel = [false];
     },
     onDeleteBooket(id) {
       if (!window.confirm("정말 삭제하시겠습니까?")) return;
