@@ -3,7 +3,7 @@
     <v-container>
       <v-layout>
         <v-flex>
-          <Book :item="booket"/>
+          <Book :item="booket" :isFunc="false"/>
 
           <div class="booket-wrapper mt-3">
             <div booket-status v-for="(item, index) in booketStatusCode" :key="index">
