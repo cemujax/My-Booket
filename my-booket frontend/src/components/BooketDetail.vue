@@ -10,7 +10,7 @@
               <div class="booket-header">
                 <div class="booket-status">
                   <div v-for="(item, index) in booketStatusCode" :key="index">
-                    <h2 v-if="item.code=== booket.status">[Booket 상태] {{item.value}}</h2>
+                    <h2 v-if="item.code=== booket.status">[Booket] {{item.value}}</h2>
                   </div>
                 </div>
                 <div class="booket-readAction">
@@ -146,7 +146,7 @@ export default {
 }
 p {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   margin: 5px;
 }
 </style>
