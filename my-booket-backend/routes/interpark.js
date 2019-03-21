@@ -1,7 +1,5 @@
 const express = require("express");
 const axios = require("axios");
-const bestSellers = require("./bestSellers");
-const newBooks = require("./newBooks");
 const router = express.Router();
 
 const INTERPARK_KEY = process.env.INTERPARK_KEY || "";

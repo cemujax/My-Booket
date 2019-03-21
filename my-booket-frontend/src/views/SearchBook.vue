@@ -126,7 +126,7 @@ export default {
       };
 
       axios
-        .get("http://localhost:4000/interparkAPI/search.api", {
+        .get("http://localhost:3000/interparkAPI/search.api", {
           params: payload
         })
         .then(res => {
