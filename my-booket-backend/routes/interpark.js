@@ -1,8 +1,9 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
+const config = require("../../config");
 
-const INTERPARK_KEY = process.env.INTERPARK_KEY || "";
+const INTERPARK_KEY = config.INTERPARK_KEY || "";
 const DOMAIN = "http://book.interpark.com/api";
 const SEARCH_API = "/search.api";
 const NEWBOOK_API = "/newBook.api";

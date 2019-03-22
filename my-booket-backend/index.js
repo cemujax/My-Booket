@@ -8,6 +8,7 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const config = require("../config");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,7 +22,7 @@ mongoose.Promise = global.Promise;
 mongoose.set("useCreateIndex", true);
 
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .connect(config.MONGO_URI, { useNewUrlParser: true })
   .then(() => {
     console.log("Successfully connected to mongodb");
   })
