@@ -1,0 +1,20 @@
+{
+  "name": "my-booket",
+  "version": "1.0.0",
+  "description": "My Book+Pocket",
+  "scripts": {
+    "build": "cd my-booket-frontend && npm i && npm run build && cd ../my-booket-backend && npm i ",
+    "start": "cd my-booket-backend && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cemujax/My-Booket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cemujax/My-Booket/issues"
+  },
+  "homepage": "https://github.com/cemujax/My-Booket#readme"
+}
