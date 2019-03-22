@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "../router";
 
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "/api";
 const UNAUTHORIZED = 401;
 const onUnauthorized = () => {
   router.push(`/login?rPath=${encodeURIComponent(location.pathname)}`);
@@ -52,13 +52,13 @@ export const bookets = {
 export const interpark = {
   newBooks() {
     return axios
-      .get("http://localhost:3000/interparkAPI/newBook.api")
+      .get("/interparkAPI/newBook.api")
       .then(res => res.data)
       .catch(error => console.log(error));
   },
   bestSeller() {
     return axios
-      .get("http://localhost:3000/interparkAPI/bestSeller.api")
+      .get("/interparkAPI/bestSeller.api")
       .then(res => res.data)
       .catch(error => console.log(error));
   }
