@@ -8,6 +8,11 @@
 
 My Booket means My Book Pocket. This service provides searching books and recording the books.
 
+## Test Account
+
+- Email: **test@test.com**
+- Pw: **1234**
+
 ## Tech
 
 ### Frontend
