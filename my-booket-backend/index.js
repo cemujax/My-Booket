@@ -31,13 +31,8 @@ mongoose
 const startT = Date.now();
 app.get("/health", (_, res) => res.json({ time: Date.now() - startT }));
 app.use("/api", require("./routes/index"));
-app.use(
-  "/interparkAPI",
-  require("./routes/interpark", proxy({
-    target: "http://book.interpark.com/api",
-    changeOrigin: true
-  }))
-);
+app.use("/interparkAPI", require("./routes/interpark"));
+
 app.use(history());
 app.use(express.static(path.join(__dirname, "../my-booket-frontend", "dist")));
 

@@ -4,7 +4,7 @@ const router = express.Router();
 const config = require("../../config");
 
 const INTERPARK_KEY = config.INTERPARK_KEY || "";
-const DOMAIN = "http://book.interpark.com/api";
+const DOMAIN = "https://book.interpark.com/api";
 const SEARCH_API = "/search.api";
 const NEWBOOK_API = "/newBook.api";
 const BESTSELLER_API = "/bestSeller.api";
@@ -33,6 +33,14 @@ router.get(SEARCH_API, (req, res, next) => {
         );
       }
 
+      data.item.forEach(book => {
+        for (let key in book) {
+          if (book.hasOwnProperty(key) && typeof book[key] === "string") {
+            book[key] = book[key].replace(/(http):/, "https:");
+          }
+        }
+      });
+
       res.json(data);
     })
     .catch(error => {
@@ -60,6 +68,14 @@ router.get(NEWBOOK_API, (req, res, next) => {
         );
       }
 
+      data.item.forEach(book => {
+        for (let key in book) {
+          if (book.hasOwnProperty(key) && typeof book[key] === "string") {
+            book[key] = book[key].replace(/(http):/, "https:");
+          }
+        }
+      });
+
       res.json({ item });
     })
     .catch(error => {
@@ -86,6 +102,13 @@ router.get(BESTSELLER_API, (req, res, next) => {
           `[bestsellor.api Error] (${new Date().toISOString()}) ==> Code:${returnCode} , ${returnMessage}`
         );
       }
+      data.item.forEach(book => {
+        for (let key in book) {
+          if (book.hasOwnProperty(key) && typeof book[key] === "string") {
+            book[key] = book[key].replace(/(http):/, "https:");
+          }
+        }
+      });
       res.json({ item });
     })
     .catch(error => {
