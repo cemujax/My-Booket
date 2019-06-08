@@ -65,5 +65,5 @@ My Booket means My Book Pocket. This service provides searching books and record
 4. Run the development server
 
    ```bash
-   $ $ npm run start
+   $ npm run start
    ```
